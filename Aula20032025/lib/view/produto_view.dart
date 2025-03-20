@@ -33,11 +33,15 @@ class _ProdutoViewState extends State<ProdutoView> {
         backgroundColor: Colors.blue.shade900,
         actions: [
           IconButton(
-            onPressed: () {ctrl.alterarVisualizacao(true);},
+            onPressed: () {
+              ctrl.alterarVisualizacao(true);
+            },
             icon: Icon(Icons.view_list_outlined, color: Colors.white),
           ),
           IconButton(
-            onPressed: () {ctrl.alterarVisualizacao(false);},
+            onPressed: () {
+              ctrl.alterarVisualizacao(false);
+            },
             icon: Icon(Icons.grid_view_outlined, color: Colors.white),
           ),
         ],
@@ -54,8 +58,6 @@ class _ProdutoViewState extends State<ProdutoView> {
 
   Widget visualizarLista() {
     return SizedBox(
-
-      //cria lista
       child: ListView.builder(
         itemCount: ctrl.produtos.length,
         itemBuilder: (context, index) {
@@ -65,12 +67,20 @@ class _ProdutoViewState extends State<ProdutoView> {
             child: Card(
               child: ListTile(
                 title: Text(item.nome),
-                subtitle: Text('R\$ ${item.preco.toStringAsFixed(2)}'),
-                trailing: IconButton(
-                  onPressed: () {
-                    ctrl.removerItem(index);
-                  },
-                  icon: Icon(Icons.delete_outline),
+                subtitle: Text('{R\$ ${item.preco.toStringAsFixed(2)}}'),
+                trailing: SizedBox(
+                  width: 80,
+                  child: Row(
+                    children: [
+                      IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                      IconButton(
+                        onPressed: () {
+                          ctrl.removerItem(index);
+                        },
+                        icon: Icon(Icons.delete_outline),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -80,12 +90,11 @@ class _ProdutoViewState extends State<ProdutoView> {
     );
   }
 
-  //cria grid
   Widget visualizarGrid() {
     return GridView.builder(
       itemCount: ctrl.produtos.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: 3,
       ),
       itemBuilder: (context, index) {
         final item = ctrl.produtos[index];
@@ -94,7 +103,7 @@ class _ProdutoViewState extends State<ProdutoView> {
           child: Card(
             child: ListTile(
               title: Text(item.nome),
-              subtitle: Text('R\$ ${item.preco.toStringAsFixed(2)}'),
+              subtitle: Text('{R\$ ${item.preco.toStringAsFixed(2)}}'),
             ),
           ),
         );
